@@ -3,6 +3,7 @@
 ^\.gitignore$
 ^blib/
 ^_alien/
+^local/
 ^Makefile$
 ^Makefile\.old$
 ^MYMETA\.(json|yml)$
@@ -10,4 +11,11 @@
 ^Alien-nghttp3-.*\.tar\.gz$
 ^cover_db/
 ^\.prove$
+^\.DS_Store$
+^\.idea/
+^\.vscode/
+.*~$
+.*\.bak$
+.*\.orig$
+.*\.rej$
 ^handoff\.md$

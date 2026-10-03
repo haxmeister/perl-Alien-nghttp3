@@ -12,7 +12,7 @@ __END__
 
 =head1 NAME
 
-Alien::nghttp3 - Find or build the nghttp3 HTTP/3 library
+Alien::nghttp3 - Find or build libnghttp3
 
 =head1 SYNOPSIS
 
@@ -24,29 +24,25 @@ Alien::nghttp3 - Find or build the nghttp3 HTTP/3 library
 
 =head1 DESCRIPTION
 
-Alien::nghttp3 makes the native nghttp3 library available to Perl
-distributions.
+Alien::nghttp3 makes the native libnghttp3 library available to Perl modules.
 
-nghttp3 implements HTTP/3 and QPACK in C. It does not provide QUIC transport
-and it does not depend on a particular QUIC implementation.
+nghttp3 is a C library for HTTP/3 and QPACK. It does not provide QUIC
+transport.
 
-Alien::nghttp3 is intentionally framework neutral. It does not depend on an
-event loop, Net::QUIC, Linux::Event, ngtcp2, or a Perl HTTP framework.
+Alien::nghttp3 only supplies the native library. It does not choose a QUIC
+implementation, event loop, TLS library, or Perl HTTP framework.
 
-A Perl distribution can use this module anywhere it needs to compile or link
-against libnghttp3.
+=head1 INSTALLATION
 
-=head1 HOW INSTALLATION WORKS
+Alien::nghttp3 first looks for libnghttp3 1.18.0 or newer on the system.
 
-Alien::nghttp3 first looks for a suitable system libnghttp3 using pkg-config.
+If a suitable system library is found, it is used.
 
-If libnghttp3 1.18.0 or newer is available, that installation is used.
+If not, Alien::nghttp3 builds the vendored nghttp3 1.18.0 source included in
+this distribution. The fallback build does not need to download nghttp3 from
+the network.
 
-Otherwise Alien::nghttp3 downloads nghttp3 1.18.0 and builds a private
-library-only copy.
-
-The private fallback build contains libnghttp3 only. It does not build QUIC,
-TLS, command-line programs, examples, or an HTTP framework.
+The fallback builds only the static libnghttp3 library.
 
 =head1 METHODS
 
@@ -62,35 +58,26 @@ Returns linker flags for libnghttp3.
 
 =head2 version
 
-Returns the detected or bundled libnghttp3 version.
+Returns the libnghttp3 version.
 
-=head1 WHAT THIS MODULE DOES NOT PROVIDE
+=head1 SCOPE
 
-Alien::nghttp3 is a native library provider. It does not provide:
+Alien::nghttp3 does not provide a Perl HTTP/3 API, QUIC transport, TLS, UDP
+socket handling, an event loop, or a web framework.
 
-=over 4
+It does not depend on Net::QUIC, Linux::Event, ngtcp2, or another QUIC
+implementation.
 
-=item * a Perl HTTP/3 connection API
+A higher-level Perl module can combine libnghttp3 with any suitable QUIC
+transport.
 
-=item * QUIC transport
-
-=item * TLS
-
-=item * UDP socket handling
-
-=item * an event loop
-
-=item * a web framework
-
-=back
-
-Those responsibilities belong to downstream distributions.
-
-=head1 VERSIONS
+=head1 REQUIREMENTS
 
 Alien::nghttp3 requires Perl 5.20 or newer and Alien::Build 2.84 or newer.
 
-The fallback source is nghttp3 1.18.0.
+A C11 compiler is needed when the vendored library must be built.
+
+The vendored fallback source is nghttp3 1.18.0.
 
 =head1 SEE ALSO
 

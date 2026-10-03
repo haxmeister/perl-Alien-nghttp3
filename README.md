@@ -5,45 +5,28 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![nghttp3](https://img.shields.io/badge/nghttp3-1.18.0-blue.svg)](https://github.com/ngtcp2/nghttp3)
 
-Alien::nghttp3 makes the native nghttp3 HTTP/3 library available to Perl
-distributions.
+Alien::nghttp3 makes the native libnghttp3 library available to Perl modules.
 
-## Scope
+nghttp3 is a C library for HTTP/3 and QPACK. It does not provide QUIC
+transport.
 
-This distribution is intentionally framework neutral.
+## Installation
 
-It provides libnghttp3. It does not provide:
+Install it like a normal Perl module:
 
-- a Perl HTTP/3 API
-- QUIC transport
-- TLS
-- an event loop
-- UDP socket handling
-- a web framework
+    cpanm Alien::nghttp3
 
-nghttp3 itself implements HTTP/3 and QPACK and is independent of any
-particular QUIC transport implementation.
+Alien::nghttp3 first looks for libnghttp3 1.18.0 or newer on the system.
 
-This means Alien::nghttp3 can be used by any Perl distribution that needs
-libnghttp3. It is not tied to Net::QUIC, Linux::Event, ngtcp2, or any other
-framework.
+If a suitable system library is found, it is used.
 
-## Installation behavior
+If not, Alien::nghttp3 builds the vendored nghttp3 1.18.0 source included in
+this distribution. The fallback build does not download nghttp3 from the
+network.
 
-Alien::nghttp3 first looks for a system installation of libnghttp3 1.18.0 or
-newer through pkg-config.
+## Using Alien::nghttp3
 
-If a suitable copy is found, it is used.
-
-Otherwise Alien::nghttp3 downloads the official nghttp3 1.18.0 release and
-builds a private library-only copy.
-
-The fallback build uses the official CMake build, builds only the static
-libnghttp3 library, and disables tests and examples.
-
-## Using it from another Perl distribution
-
-The normal Alien interface is all that downstream code needs:
+Perl modules that need libnghttp3 can use the normal Alien interface:
 
     use Alien::nghttp3;
 
@@ -51,27 +34,36 @@ The normal Alien interface is all that downstream code needs:
     my $libs    = Alien::nghttp3->libs;
     my $version = Alien::nghttp3->version;
 
-XS distributions can use these values to compile and link directly against
-libnghttp3.
+These values can be used when compiling and linking XS code.
 
-## Relationship to QUIC
+## Scope
 
-HTTP/3 runs over QUIC, but libnghttp3 does not implement the QUIC transport.
+Alien::nghttp3 only supplies libnghttp3.
 
-A downstream HTTP/3 implementation is expected to combine libnghttp3 with the
-QUIC implementation of its choice.
+It does not provide a Perl HTTP/3 API, QUIC transport, TLS, an event loop, or
+a web framework.
 
-Alien::nghttp3 deliberately does not choose one.
+It does not depend on Net::QUIC, Linux::Event, ngtcp2, or any other QUIC
+implementation.
 
-## Compatibility
+This keeps the distribution usable by any Perl project that needs libnghttp3.
+
+## Requirements
 
 Alien::nghttp3 requires:
 
 - Perl 5.20 or newer
 - Alien::Build 2.84 or newer
-- a C11-capable C compiler when the fallback library must be built
+- a C11 compiler when the vendored library must be built
 
-The bundled fallback source is nghttp3 1.18.0.
+The fallback build uses CMake and builds only the static libnghttp3 library.
+
+## Vendored source
+
+The fallback source is nghttp3 1.18.0.
+
+The exact upstream source and sfparse revision are recorded in
+[vendored source notes](vendor/README.md).
 
 ## Development
 
@@ -79,10 +71,10 @@ The bundled fallback source is nghttp3 1.18.0.
     make
     make test
 
-See CONTRIBUTING.md for more development information.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
 ## License
 
-Alien::nghttp3 is MIT licensed.
+Alien::nghttp3 is released under the MIT License.
 
-nghttp3 is also MIT licensed.
+The vendored nghttp3 and sfparse sources are also MIT licensed.

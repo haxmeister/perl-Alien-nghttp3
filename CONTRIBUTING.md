@@ -1,28 +1,28 @@
 # Contributing to Alien::nghttp3
 
-Contributions are welcome through the GitHub repository:
+Contributions are welcome at:
 
 https://github.com/haxmeister/perl-Alien-nghttp3
 
 ## Reporting bugs
 
-Please open an issue and include enough information to reproduce the problem.
+Please open a GitHub issue and include:
 
-Useful details are:
-
-- operating system
-- Perl version
-- Alien::Build version
-- compiler version when relevant
+- your operating system
+- your Perl version
+- your Alien::Build version
+- your compiler version, if the native build failed
 - the output from `perl Makefile.PL`
 - the output from `make` or `make test`
-- the output from `pkgconf --modversion libnghttp3` when pkgconf is available
 
-For security issues, follow SECURITY.md instead of opening a public issue.
+If you have a system libnghttp3, the output from this can also help:
+
+    pkgconf --modversion libnghttp3
+
+For security problems, please follow SECURITY.md instead of opening a public
+issue.
 
 ## Development
-
-Alien::nghttp3 requires Perl 5.20 or newer and Alien::Build 2.84 or newer.
 
 A normal development build is:
 
@@ -30,29 +30,18 @@ A normal development build is:
     make
     make test
 
-When a suitable system libnghttp3 1.18.0 or newer is available, it may be
-used.
+Alien::nghttp3 uses a system libnghttp3 1.18.0 or newer when one is available.
+Otherwise it builds the vendored nghttp3 1.18.0 source with CMake.
 
-Otherwise the distribution builds the pinned nghttp3 1.18.0 fallback using
-CMake.
+The fallback build does not download nghttp3 from the network.
 
 Before submitting a pull request, make sure the test suite passes.
 
-Changes to the native build path should keep working on supported Linux,
-macOS, and Windows configurations.
+## Project scope
 
-## Scope
+Alien::nghttp3 supplies libnghttp3 to Perl modules.
 
-Alien::nghttp3 supplies libnghttp3 to downstream Perl distributions.
+Please keep it independent of Net::QUIC, Linux::Event, ngtcp2, TLS
+implementations, event loops, and Perl HTTP frameworks.
 
-It must remain independent of:
-
-- Net::QUIC
-- Linux::Event
-- ngtcp2
-- TLS implementations
-- event loops
-- Perl HTTP frameworks
-
-Integration between libnghttp3 and a QUIC or HTTP stack belongs in a
-higher-level distribution.
+HTTP/3 or QUIC integration belongs in a higher-level distribution.
