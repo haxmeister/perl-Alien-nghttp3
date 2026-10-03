@@ -45,6 +45,7 @@ share {
 
     start_url 'vendor/nghttp3-1.18.0/';
     plugin 'Fetch::LocalDir';
+    plugin 'Extract::Directory';
 
     build sub {
         my ($build) = @_;
