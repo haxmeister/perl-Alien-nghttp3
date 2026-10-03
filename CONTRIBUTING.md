@@ -33,8 +33,8 @@ A normal development build is:
 When a suitable system libnghttp3 1.18.0 or newer is available, it may be
 used.
 
-Otherwise the distribution builds the pinned nghttp3 1.18.0 fallback using
-CMake.
+Otherwise the distribution builds the pinned, vendored nghttp3 1.18.0
+fallback using CMake. The fallback does not require network access.
 
 Before submitting a pull request, make sure the test suite passes.
 

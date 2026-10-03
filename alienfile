@@ -43,13 +43,8 @@ plugin 'PkgConfig' => (
 share {
     requires 'Alien::cmake3' => '0.10';
 
-    start_url 'https://github.com/ngtcp2/nghttp3/releases/download/v1.18.0/nghttp3-1.18.0.tar.gz';
-
-    plugin 'Digest' => [
-        SHA256 => '2812e9c06583fa24c8dc46bdb5291310a69196352ceaca8fbe98106ff36ae7d8',
-    ];
-    plugin 'Download';
-    plugin 'Extract' => 'tar.gz';
+    start_url 'vendor/nghttp3-1.18.0/';
+    plugin 'Fetch::LocalDir';
 
     build sub {
         my ($build) = @_;

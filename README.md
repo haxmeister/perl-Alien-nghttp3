@@ -35,10 +35,13 @@ newer through pkg-config.
 
 If a suitable copy is found, it is used.
 
-Otherwise Alien::nghttp3 downloads the official nghttp3 1.18.0 release and
-builds a private library-only copy.
+Otherwise Alien::nghttp3 builds a private library-only copy from the nghttp3
+1.18.0 source vendored in this distribution.
 
-The fallback build uses the official CMake build, builds only the static
+The fallback does not need network access. The vendored source is pinned to
+upstream nghttp3 v1.18.0, including the sfparse revision used by that release.
+
+The fallback build uses the upstream CMake build, builds only the static
 libnghttp3 library, and disables tests and examples.
 
 ## Using it from another Perl distribution
@@ -71,7 +74,7 @@ Alien::nghttp3 requires:
 - Alien::Build 2.84 or newer
 - a C11-capable C compiler when the fallback library must be built
 
-The bundled fallback source is nghttp3 1.18.0.
+The vendored fallback source is nghttp3 1.18.0.
 
 ## Development
 

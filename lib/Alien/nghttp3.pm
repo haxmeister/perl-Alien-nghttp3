@@ -42,8 +42,9 @@ Alien::nghttp3 first looks for a suitable system libnghttp3 using pkg-config.
 
 If libnghttp3 1.18.0 or newer is available, that installation is used.
 
-Otherwise Alien::nghttp3 downloads nghttp3 1.18.0 and builds a private
-library-only copy.
+Otherwise Alien::nghttp3 builds a private library-only copy from the nghttp3
+1.18.0 source vendored in this distribution. No network access is required for
+the fallback build.
 
 The private fallback build contains libnghttp3 only. It does not build QUIC,
 TLS, command-line programs, examples, or an HTTP framework.
@@ -90,7 +91,7 @@ Those responsibilities belong to downstream distributions.
 
 Alien::nghttp3 requires Perl 5.20 or newer and Alien::Build 2.84 or newer.
 
-The fallback source is nghttp3 1.18.0.
+The vendored fallback source is nghttp3 1.18.0.
 
 =head1 SEE ALSO
 
